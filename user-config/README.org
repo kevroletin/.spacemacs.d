@@ -1,0 +1,1 @@
+https://github.com/vkevroletin/emacs24-starter-kit port for Spacemacs
