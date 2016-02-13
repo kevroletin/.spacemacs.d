@@ -1,6 +1,15 @@
 (setq user-config-packages
       '(evil
-        helm))
+        helm
+        ;; Transitive dependencies
+        dash
+        ede
+        flycheck
+        projectile
+        s
+        ;; Local code
+        (project-cache :location local)
+        (compile-per-project :location local)))
 
 (defun user-config/post-init-evil ()
   (with-eval-after-load 'evil
@@ -31,3 +40,16 @@
     (global-set-key (kbd "C-c h g") 'helm-do-grep)
     (global-set-key (kbd "C-c h o") 'helm-occur)
     (global-set-key (kbd "C-c h x") 'helm-register)))
+
+(defun user-config/init-project-cache ()
+  (use-package project-cache
+    :commands (project-cache-file
+               project-cache-put
+               project-cache-get)))
+
+(defun user-config/init-compile-per-project ()
+  (use-package compile-per-project
+    :bind
+    ("<f5>" . compile-per-project-compile)
+    ("<f6>" . compile-per-project-run)
+    ("<f7>" . compile-per-project-test)))
