@@ -86,4 +86,6 @@
     (custom-set-faces
      '(semantic-unmatched-syntax-face ((t (:background "grey20"))))
      '(semantic-tag-boundary-face ((t nil)))
-     '(semantic-decoration-on-unknown-includes ((t (:inherit flyspell-incorrect)))))))
+     '(semantic-decoration-on-unknown-includes ((t (:inherit flyspell-incorrect)))))
+
+    (spacemacs/set-leader-keys "oj" 'semantic-ia-fast-jump)))
