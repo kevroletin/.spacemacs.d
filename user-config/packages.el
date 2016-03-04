@@ -1,17 +1,25 @@
 (setq user-config-packages
-      '(evil
+      '(ansi-color
+        cc-mode
+        evil
+        grep
         helm
+        projectile
         ;; Transitive dependencies
         dash
         ede
         flycheck
-        projectile
         s
         semantic
         ;; Local code
-        (project-cache       :location local)
+        (auto-cpp-project    :location local)
         (compile-per-project :location local)
-        (auto-cpp-project    :location local)))
+        (project-cache       :location local)))
+
+(defun user-config/post-init-cc-mode ()
+  (with-eval-after-load 'cc-mode
+    (setq c-default-style "bsd")
+    (setq c-basic-offset 4)))
 
 (defun user-config/post-init-evil ()
   (with-eval-after-load 'evil
@@ -27,12 +35,15 @@
     ;; Use tab for indentation like in Emacs
     (global-set-key [tab] #'indent-for-tab-command)))
 
+(defun user-config/post-init-grep ()
+  (with-eval-after-load 'grep
+    (user-config/add-all-to-list 'grep-find-ignored-files       user-config-ignored-files)
+    (user-config/add-all-to-list 'grep-find-ignored-directories user-config-ignored-directories)))
+
 (defun user-config/post-init-helm ()
   (with-eval-after-load 'helm
-    (setq projectile-require-project-root t)
-    (setq projectile-enable-caching t)
     ;; Bind helm functions to Emacs keybinding (for cases when you don't use
-    ;; Vim-style)
+    ;; Vim-style or Emacs-style)
     (global-set-key (kbd "M-x") 'helm-M-x)
     (global-set-key (kbd "C-x C-f") 'helm-find-files)
     (global-set-key (kbd "M-y") 'helm-show-kill-ring)
@@ -40,6 +51,19 @@
     (global-set-key (kbd "C-c h g") 'helm-do-grep)
     (global-set-key (kbd "C-c h o") 'helm-occur)
     (global-set-key (kbd "C-c h x") 'helm-register)))
+
+(defun user-config/post-init-projectile ()
+  (with-eval-after-load 'projectile
+    (setq projectile-require-project-root t)
+    (setq projectile-enable-caching t)
+
+    ;; Treat .svn directory as project root. The topmost .svn folder has
+    ;; precedence because svn externals place .svn directories inside other svn
+    ;; repository.
+    (add-to-list 'projectile-project-root-files ".svn")
+
+    (user-config/add-all-to-list 'projectile-globally-ignored-files       user-config-ignored-files)
+    (user-config/add-all-to-list 'projectile-globally-ignored-directories user-config-ignored-directories)))
 
 (defun user-config/init-project-cache ()
   (use-package project-cache
@@ -62,7 +86,8 @@
 (defun user-config/init-auto-cpp-project ()
   (use-package auto-cpp-project
     :commands (auto-cpp-configure-flycheck
-               auto-cpp-register-ede-autoload)
+               auto-cpp-register-ede-autoload
+               auto-cpp-invalidate-flycheck-configuration-cache)
     :init
     (progn
       (spacemacs/add-to-hooks 'auto-cpp-configure-flycheck
@@ -89,3 +114,12 @@
      '(semantic-decoration-on-unknown-includes ((t (:inherit flyspell-incorrect)))))
 
     (spacemacs/set-leader-keys "oj" 'semantic-ia-fast-jump)))
+
+(defun user-config/init-ansi-color ()
+  (with-eval-after-load 'ansi-color
+    (defun user-config//colorize-compilation-buffer ()
+      (when (eq major-mode 'compilation-mode)
+        (ansi-color-apply-on-region compilation-filter-start (point-max))))
+    (add-hook 'compilation-filter-hook 'user-config//colorize-compilation-buffer)))
+
+;; [2] http://stackoverflow.com/questions/13397737/ansi-coloring-in-compilation-mode

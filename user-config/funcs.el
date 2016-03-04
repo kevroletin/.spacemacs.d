@@ -3,3 +3,7 @@
   (interactive)
   (kill-region isearch-other-end (point))
   (isearch-exit))
+
+(defun user-config/add-all-to-list (to values)
+  (dolist (x values)
+    (add-to-list to x)))
