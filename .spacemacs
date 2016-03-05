@@ -49,6 +49,7 @@ values."
 
      ;; User config
      user-config
+     user-theme
      )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
@@ -258,35 +259,5 @@ This function is called at the very end of Spacemacs initialization after
 layers configuration. You are free to put any user code."
 
   (setq powerline-default-separator 'box)
-
-  ;; TODO: move into theme
-  (custom-set-faces
-   '(helm-grep-finish   ((t (:foreground "#8AE234"))))
-   '(helm-bookmark-info ((t (:inherit helm-grep-finish))))
-   '(helm-ff-executable ((t (:inherit helm-grep-finish))))
-   '(helm-prefarg       ((t (:inherit helm-grep-finish))))
-   '(helm-locate-finish ((t (:inherit helm-grep-finish))))
-   '(helm-buffer-directory ((t (:inherit default :weight bold))))
-   '(helm-ff-directory ((t (:inherit default :foreground "sandy brown"))))
-   '(helm-ff-dotted-directory ((t (:inherit helm-ff-directory :foreground "dim gray"))))
-   '(helm-ff-dotted-symlink-directory ((t (:inherit helm-ff-symlink :weight bold))))
-   '(helm-ff-invalid-symlink ((t (:inherit helm-ff-symlink :underline (:color "red" :style wave)))))
-   '(helm-ff-symlink ((t (:underline t))))
-   '(helm-visible-mark ((t (:background "gray50" :foreground "#1d1f21"))))
-   '(helm-selection    ((t (:background "gray90" :foreground "#1d1f21" :weight ultra-bold))))
-   '(helm-ff-prefix ((t (:foreground "#ff982d"))))
-   '(helm-source-header ((t (:foreground "#96CBFE"))))
-   '(helm-buffer-file      ((t nil)))
-   '(helm-candidate-number ((t nil)))
-   '(helm-ff-file          ((t nil)))
-   '(company-preview ((t (:foreground "#96CBFE"))))
-   '(company-preview-common ((t (:inherit company-preview :underline "#96CBFE"))))
-   '(company-preview-search ((t (:inherit company-preview))))
-   '(company-scrollbar-bg ((t (:inherit company-tooltip :background "dim gray"))))
-   '(company-scrollbar-fg ((t (:background "black"))))
-   '(company-tooltip ((t (:background "#c5c8c6" :foreground "#1d1f21"))))
-   '(company-tooltip-common ((t (:inherit company-tooltip :foreground "red4"))))
-   '(company-tooltip-common-selection ((t (:inherit company-tooltip-selection :background "#96CBFE"))))
-   '(company-tooltip-selection ((t (:inherit company-tooltip :background "#96CBFE")))))
 
   (server-start))
