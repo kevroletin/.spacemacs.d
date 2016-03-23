@@ -44,18 +44,27 @@ values."
      haskell
      lua
      markdown
+     rust
      speed-reading
      yaml
 
      ;; User config
      user-config
-     user-theme
+     (user-theme :variables user-theme-replace-atom-dark '())
+     themes-megapack
      )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
    ;; packages, then consider creating a layer. You can also put the
    ;; configuration in `dotspacemacs/user-config'.
-   dotspacemacs-additional-packages '(groovy-mode)
+   dotspacemacs-additional-packages
+   '(
+     base16-theme
+     groovy-mode
+     rainbow-mode
+     solarized-theme
+     atom-dark-theme
+     )
    ;; A list of packages and/or extensions that will not be install and loaded.
    dotspacemacs-excluded-packages '()
    ;; If non-nil spacemacs will delete any orphan packages, i.e. packages that
@@ -110,7 +119,10 @@ values."
    ;; List of themes, the first of the list is loaded when spacemacs starts.
    ;; Press <SPC> T n to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
-   dotspacemacs-themes '(atom-dark
+   dotspacemacs-themes '(base16-default-dark
+                         base16-default-light
+                         atom-dark
+                         spacemacs-dark
                          adwaita)
    ;; If non nil the cursor color matches the state color in GUI Emacs.
    dotspacemacs-colorize-cursor-according-to-state t
@@ -248,7 +260,7 @@ It is called immediately after `dotspacemacs/init'.  You are free to put almost
 any user code here.  The exception is org related code, which should be placed
 in `dotspacemacs/user-config'.")
 
-(defun dotspacemacs/set-path (x)
+(defun dotspacemacs//set-path (x)
   (let ((separator (if (eq system-type 'windows-nt) ";" ":")))
     (setenv "PATH" (mapconcat 'identity x separator))
     (setq exec-path x)))
