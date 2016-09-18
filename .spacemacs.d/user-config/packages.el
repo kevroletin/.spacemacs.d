@@ -4,11 +4,13 @@
         evil
         grep
         helm
+        org
         projectile
         ;; Transitive dependencies
         dash
         ede
         flycheck
+        htmlize
         s
         semantic
         ;; Local code
@@ -51,6 +53,10 @@
     (global-set-key (kbd "C-c h g") 'helm-do-grep)
     (global-set-key (kbd "C-c h o") 'helm-occur)
     (global-set-key (kbd "C-c h x") 'helm-register)))
+
+(defun user-config/post-init-org ()
+  (with-eval-after-load 'org
+    (user-config//load-literate-config "org-mode.org")))
 
 (defun user-config/post-init-projectile ()
   (with-eval-after-load 'projectile
