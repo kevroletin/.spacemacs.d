@@ -51,7 +51,7 @@ values."
      ;; User config
      user-config
      (user-theme :variables user-theme-replace-atom-dark '())
-     themes-megapack
+     ;; themes-megapack
      )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
@@ -61,12 +61,13 @@ values."
    '(
      base16-theme
      groovy-mode
+     scad-mode
      rainbow-mode
      solarized-theme
      atom-dark-theme
      )
    ;; A list of packages and/or extensions that will not be install and loaded.
-   dotspacemacs-excluded-packages '()
+   dotspacemacs-excluded-packages '(smartparens)
    ;; If non-nil spacemacs will delete any orphan packages, i.e. packages that
    ;; are declared in a layer which is not a member of
    ;; the list `dotspacemacs-configuration-layers'. (default t)
@@ -270,6 +271,9 @@ in `dotspacemacs/user-config'.")
 This function is called at the very end of Spacemacs initialization after
 layers configuration. You are free to put any user code."
 
+  (setq ghc-report-errors '())
+
   (setq powerline-default-separator 'box)
+  (setq lua-indent-level 4)
 
   (server-start))
