@@ -126,8 +126,8 @@ Agenda should be build from files listed below. Create missed files.
                                   "~/org/habits.org"
                                   "~/org/education.org"
                                   "~/org/work.org")))
-    (dolist (it personal-org-files) (ensure-file-exists it))
-    (setq org-agenda-files personal-org-files))
+    (dolist (it personal-org-files) (ensure-file-exists it)))
+  (setq org-agenda-files (list "~/org/personal" "~/org/work"))
 
   (ensure-file-exists "~/org/archive.org")
 #+end_src
@@ -140,16 +140,19 @@ Archive in file ~/org/archive.org (absolute path), under headlines
 
 Configure "capture" feature for quick notes saving
 #+begin_src emacs-lisp
-  (setq org-default-notes-file "~/org/notes.org")
-  (define-key global-map (kbd "C-c c") 'org-capture)
+  (setq org-default-notes-file "~/org/personal/refile.org")
 #+end_src
 
 #+begin_src emacs-lisp
   (setq org-capture-templates
-        '(("n" "New task" entry (file+headline "~/org/gtd.org" "No category")
-           "* NEW %?\n  %i\n  %a")
-          ("t" "Note" entry (file "~/org/notes.org")
-           "* %?\n  %i\n  %a")))
+        '(("t" "(W) New task" entry (file "~/org/work/refile.org")
+           "* NEW %?\n  %i\n")
+          ("n" "(W) Note" entry (file "~/org/work/refile.org")
+           "* %?\n  %i\n")
+          ("T" "(H) New task" entry (file "~/org/personal/refile.org")
+           "* NEW %?\n  %i\n")
+          ("N" "(H) Note" entry (file "~/org/personal/refile.org")
+           "* %?\n  %i\n")))
 #+end_src
 
 Enable habit tracking in Org-mode
@@ -237,3 +240,9 @@ theme.
   (custom-set-faces
     '(outline-2 ((t (:foreground "#8AE234")))))
 #+end_src
+
+* Links
+
+[1] http://juanreyero.com/article/emacs/org-teams.html
+[2] http://doc.norang.ca/org-mode.html
+[3] https://hamberg.no/gtd/
