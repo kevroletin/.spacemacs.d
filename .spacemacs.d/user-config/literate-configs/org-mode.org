@@ -170,7 +170,7 @@ in brackets define if setting status requires writing description.
 #+begin_src emacs-lisp
 (setq org-todo-keywords
       (quote ((sequence "TODO(t)" "NEW(n)"  "|" "DONE(d@/!)")
-              (sequence "WAITING(w@/!)" "MAYBE(h@/!)" "|" "CANCELLED(c@/!)"))))
+              (sequence "WAITING(w@/!)" "MAYBE(m@/!)" "|" "CANCELLED(c@/!)"))))
 #+end_src
 
 Coloring have meaning. Red color disturbs me so NEW task are red -
