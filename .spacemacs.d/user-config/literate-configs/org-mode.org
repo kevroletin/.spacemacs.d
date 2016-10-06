@@ -145,13 +145,13 @@ Configure "capture" feature for quick notes saving
 
 #+begin_src emacs-lisp
   (setq org-capture-templates
-        '(("t" "(W) New task" entry (file "~/org/work/refile.org")
+        '(("T" "(W) New task" entry (file "~/org/work/refile.org")
            "* NEW %?\n  %i\n")
-          ("n" "(W) Note" entry (file "~/org/work/refile.org")
+          ("N" "(W) Note" entry (file "~/org/work/refile.org")
            "* %?\n  %i\n")
-          ("T" "(H) New task" entry (file "~/org/personal/refile.org")
+          ("t" "(H) New task" entry (file "~/org/personal/refile.org")
            "* NEW %?\n  %i\n")
-          ("N" "(H) Note" entry (file "~/org/personal/refile.org")
+          ("n" "(H) Note" entry (file "~/org/personal/refile.org")
            "* %?\n  %i\n")))
 #+end_src
 
@@ -192,6 +192,57 @@ projects (i.e. projects without tasks).
   (setq org-tags-exclude-from-inheritance '("prj")
         org-stuck-projects '("+prj"
                              ("TODO" "NEW")))
+#+end_src
+
+** Custom agenda views
+
+Main idea is simple:
++ track work-related and personal activities in same way
++ but separate them in all views except for daily agenda
+
+Filters below are shortcuts for daily and weekly reviews.
+
+Shortcuts:
++ a :: agenda
++ n :: new and refile
++ t :: todos
++ h :: home (H - home tasks)
++ w :: work (W - work tasks)
+
+See [4] for advanced filtering
+#+begin_src emacs-lisp
+  (setq org-agenda-custom-commands
+        '(("a" agenda)
+          ("n" "NEW list"
+           ((todo "NEW" ((org-agenda-overriding-header "Personal NEW task")
+                          (org-agenda-files (list "~/org/personal"))))
+            (tags-todo "+REFILE-TODO=\"NEW\"" ((org-agenda-overriding-header "Personal Refile tasks (except NEW)")
+                                               (org-agenda-files (list "~/org/personal"))))
+            (todo "NEW" ((org-agenda-overriding-header "Work NEW task")
+                         (org-agenda-files (list "~/org/work"))))
+            (tags-todo "+REFILE-TODO=\"NEW\"" ((org-agenda-overriding-header "Work Refile tasks (except NEW)")
+                                               (org-agenda-files (list "~/org/work"))))))
+          ("t" "TODO list"
+           ((todo "TODO" ((org-agenda-overriding-header "Personal TODO task")
+                          (org-agenda-files (list "~/org/personal"))))
+            (todo "TODO" ((org-agenda-overriding-header "Work TODO task")
+                          (org-agenda-files (list "~/org/work"))))))
+          ("H" "Personal tasks" todo "" ((org-agenda-overriding-header "All personal task")
+                        (org-agenda-files (list "~/org/personal"))))
+          ("W" "Work tasks" todo "" ((org-agenda-overriding-header "All work task")
+                        (org-agenda-files (list "~/org/work"))))
+          ("h" "Review home tasks"
+           ((agenda)
+            (todo "NEW")
+            (tags-todo "-habits")
+            (tags-todo "+REFILE"))
+           ((org-agenda-files (list "~/org/personal"))))
+          ("w" "Review work tasks"
+           ((agenda)
+            (todo "NEW")
+            (tags-todo "-habits")
+            (tags-todo "+REFILE"))
+           ((org-agenda-files (list "~/org/work"))))))
 #+end_src
 
 ** Send agenda to email
@@ -246,3 +297,4 @@ theme.
 [1] http://juanreyero.com/article/emacs/org-teams.html
 [2] http://doc.norang.ca/org-mode.html
 [3] https://hamberg.no/gtd/
+[4] http://orgmode.org/worg/org-tutorials/advanced-searching.html
