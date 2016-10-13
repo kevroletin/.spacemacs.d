@@ -62,6 +62,7 @@ values."
      rust
      speed-reading
      yaml
+     python
 
      ;; User config
      user-config
@@ -74,12 +75,13 @@ values."
    ;; configuration in `dotspacemacs/user-config'.
    dotspacemacs-additional-packages
    '(
-     base16-theme
-     groovy-mode
-     scad-mode
-     rainbow-mode
-     solarized-theme
      atom-dark-theme
+     base16-theme
+     gnuplot-mode
+     groovy-mode
+     rainbow-mode
+     scad-mode
+     solarized-theme
      )
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
@@ -319,7 +321,8 @@ values."
   "Initialization function for user code.
 It is called immediately after `dotspacemacs/init'.  You are free to put almost
 any user code here.  The exception is org related code, which should be placed
-in `dotspacemacs/user-config'.")
+in `dotspacemacs/user-config'."
+  (setenv "SHELL" "/bin/bash"))
 
 (defun dotspacemacs//set-path (x)
   (let ((separator (if (eq system-type 'windows-nt) ";" ":")))
@@ -337,3 +340,22 @@ layers configuration. You are free to put any user code."
   (setq lua-indent-level 4)
 
   (server-start))
+
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(company-tooltip-common ((t (:inherit company-tooltip :weight bold :underline nil))))
+ '(company-tooltip-common-selection ((t (:inherit company-tooltip-selection :weight bold :underline nil))))
+ '(flyspell-duplicate ((t (:underline (:color "dark orange" :style wave :inherit unspecified)))))
+ '(flyspell-incorrect ((t (:underline (:color "red" :style wave :inherit unspecified)))))
+ '(outline-2 ((t (:foreground "#8AE234")))))
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages
+   (quote
+    (yapfify uuidgen powerline py-isort spinner org-projectile org alert log4e gntp org-download ob-http mwim markdown-mode live-py-mode link-hint intero hydra hlint-refactor parent-mode projectile helm-hoogle request gitignore-mode git-link fringe-helper git-gutter+ git-gutter package-build pyvenv pytest pyenv-mode py-yapf pip-requirements hy-mode helm-pydoc cython-mode company-anaconda anaconda-mode pythonic gnuplot-mode yaml-mode ws-butler window-numbering which-key volatile-highlights vi-tilde-fringe use-package toml-mode toc-org spray spacemacs-theme spaceline solarized-theme smooth-scrolling smeargle shm scad-mode restclient restart-emacs rainbow-mode rainbow-delimiters racer quelpa popwin persp-mode pcre2el paradox page-break-lines orgit org-repo-todo org-present org-pomodoro org-plus-contrib org-bullets open-junk-file neotree move-text mmm-mode markdown-toc magit-gitflow macrostep lua-mode lorem-ipsum linum-relative leuven-theme info+ indent-guide ido-vertical-mode hungry-delete htmlize hl-todo hindent highlight-parentheses highlight-numbers highlight-indentation help-fns+ helm-themes helm-swoop helm-projectile helm-mode-manager helm-make helm-gtags helm-gitignore helm-flyspell helm-flx helm-descbinds helm-company helm-c-yasnippet helm-ag haskell-snippets groovy-mode google-translate golden-ratio gnuplot gitconfig-mode gitattributes-mode git-timemachine git-messenger git-gutter-fringe git-gutter-fringe+ gh-md ggtags flycheck-rust flycheck-pos-tip flycheck-haskell flx-ido fill-column-indicator fancy-battery expand-region exec-path-from-shell evil-visualstar evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-args evil-anzu eval-sexp-fu engine-mode elisp-slime-nav disaster diff-hl define-word company-statistics company-racer company-quickhelp company-ghc company-cabal company-c-headers cmm-mode cmake-mode clean-aindent-mode clang-format buffer-move bracketed-paste base16-theme auto-yasnippet auto-highlight-symbol auto-dictionary auto-compile atom-dark-theme aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line ac-ispell))))
