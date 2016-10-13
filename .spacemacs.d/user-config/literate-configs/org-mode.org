@@ -34,23 +34,6 @@ Archive in file ~/org/archive.org (absolute path), under headlines
   (setq org-archive-location "~/org/archive.org::* From %s")
 #+end_src
 
-Configure "capture" feature for quick notes saving
-#+begin_src emacs-lisp
-  (setq org-default-notes-file "~/org/personal/refile.org")
-#+end_src
-
-#+begin_src emacs-lisp
-  (setq org-capture-templates
-        '(("T" "(W) New task" entry (file "~/org/work/refile.org")
-           "* NEW %?\n  %i\n")
-          ("N" "(W) Note" entry (file "~/org/work/refile.org")
-           "* %?\n  %i\n")
-          ("t" "(H) New task" entry (file "~/org/personal/refile.org")
-           "* NEW %?\n  %i\n")
-          ("n" "(H) Note" entry (file "~/org/personal/refile.org")
-           "* %?\n  %i\n")))
-#+end_src
-
 Enable habit tracking in Org-mode
 #+begin_src emacs-lisp
   (add-to-list 'org-modules 'org-habit)
@@ -90,7 +73,33 @@ projects (i.e. projects without tasks).
                              ("TODO" "NEW")))
 #+end_src
 
-** Custom agenda views
+* Notes and refile
+
+Configure "capture" feature for quick notes saving
+#+begin_src emacs-lisp
+  (setq org-default-notes-file "~/org/personal/refile.org")
+#+end_src
+
+#+begin_src emacs-lisp
+  (setq org-capture-templates
+        '(("T" "(W) New task" entry (file "~/org/work/refile.org")
+           "* NEW %?\n  %i\n")
+          ("N" "(W) Note" entry (file "~/org/work/refile.org")
+           "* %?\n  %i\n")
+          ("t" "(H) New task" entry (file "~/org/personal/refile.org")
+           "* NEW %?\n  %i\n")
+          ("n" "(H) Note" entry (file "~/org/personal/refile.org")
+           "* %?\n  %i\n")))
+#+end_src
+
+[5], [6]
+#+begin_src emacs-lisp
+  (setq org-refile-targets '((nil :maxlevel . 9)
+                                  (org-agenda-files :maxlevel . 9)))
+  (setq org-outline-path-complete-in-steps nil)         ; Refile in a single go
+  (setq org-refile-use-outline-path t)                  ; Show full paths for refiling
+#+end_src
+* Custom agenda views
 
 Main idea is simple:
 + track work-related and personal activities in same way
@@ -130,40 +139,20 @@ See [4] for advanced filtering
           ("h" "Review home tasks"
            ((agenda)
             (todo "NEW")
-            (tags-todo "-habits")
+            (tags-todo "-habit")
             (tags-todo "+REFILE"))
            ((org-agenda-files (list "~/org/personal"))))
           ("w" "Review work tasks"
            ((agenda)
             (todo "NEW")
-            (tags-todo "-habits")
+            (tags-todo "-habit")
             (tags-todo "+REFILE"))
            ((org-agenda-files (list "~/org/work"))))))
 #+end_src
-
-** Send agenda to email
-
-+ C-c m from agenda view sends it via email
-  This function exports existing agenda buffer to html. Then it composes
-  email and sends it. Email composition is tricky since it uses
-  interactive functions to create email.
-  #+begin_src emacs-lisp
-    (defun sk-send-agenda ()
-      (interactive)
-      (require 'sk-email-agenda) ;; not-auto loads ^_^
-      (sk-send-agenda-to-email "kevroletin@gmail.com"))
-
-    (with-eval-after-load "org-agenda"
-      (define-key org-agenda-mode-map (kbd "C-c m") #'sk-send-agenda))
-#+end_src
-
-** Flyspell customization
+* Flyspell customization
 
 Indicate grammar mistakes using red wave underline (like in graphical
 text editors).
-
-Org mode loads custom configuration after all starter kit files. So
-this is default values which you can override using custom interface.
 
 Advice: to investigate font face under cursor use what-cursor-position
 with a prefix argument /(keyboard shortcut is C-u C-x =)/.
@@ -173,16 +162,9 @@ with a prefix argument /(keyboard shortcut is C-u C-x =)/.
  '(flyspell-incorrect ((t (:underline (:color "red" :style wave :inherit unspecified))))))
 #+end_src
 
-Enable flyspell for org mode
+* Appearance
 
-#+begin_src emacs-lisp
-(add-hook 'org-mode-hook 'turn-on-flyspell)
-#+end_src
-
-** Appearance
-
-Default color of outline-2 face same with default color in atom-dark
-theme.
+Hack since we doesn't consider which theme is enabled
 #+begin_src emacs-lisp
   (custom-set-faces
     '(outline-2 ((t (:foreground "#8AE234")))))
@@ -194,3 +176,5 @@ theme.
 [2] http://doc.norang.ca/org-mode.html
 [3] https://hamberg.no/gtd/
 [4] http://orgmode.org/worg/org-tutorials/advanced-searching.html
+[5] http://orgmode.org/manual/Refile-and-copy.html
+[6] https://www.reddit.com/r/emacs/comments/4366f9/how_do_orgrefiletargets_work/
