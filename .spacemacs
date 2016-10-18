@@ -66,6 +66,7 @@ values."
 
      ;; User config
      user-config
+     org-jira
      (user-theme :variables user-theme-replace-atom-dark '())
      ;; themes-megapack
      )
@@ -75,6 +76,7 @@ values."
    ;; configuration in `dotspacemacs/user-config'.
    dotspacemacs-additional-packages
    '(
+     (org-jira :location (recipe :fetcher github :repo "baohaojun/org-jira" :branch "restapi"))
      atom-dark-theme
      base16-theme
      gnuplot-mode
@@ -333,6 +335,9 @@ in `dotspacemacs/user-config'."
   "Configuration function for user code.
 This function is called at the very end of Spacemacs initialization after
 layers configuration. You are free to put any user code."
+
+  (setq jiralib-url "https://jira.rhonda.ru:443")
+  (setq org-jira-working-dir "~/org/work/jira")
 
   (setq ghc-report-errors '())
 

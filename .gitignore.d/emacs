@@ -2,8 +2,10 @@
 !/.gitignore.d
 !/.gitignore.d/emacs
 !/.gitignore.d/emacs-config
+!/.gitmodules
 !/.spacemacs
 !/.spacemacs.d
+!/.spacemacs.d/org-jira
 !/.spacemacs.d/user-config
 !/.spacemacs.d/user-config/config.el
 !/.spacemacs.d/user-config/funcs.el
