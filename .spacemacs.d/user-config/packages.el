@@ -1,5 +1,6 @@
 (setq user-config-packages
       '(ansi-color
+        auth-source
         cc-mode
         evil
         grep
