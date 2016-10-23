@@ -1,5 +1,6 @@
 (setq user-config-packages
-      '(ansi-color
+      '((jira :location (recipe :fetcher github :repo "vkevroletin/jira.el"))
+        ansi-color
         auth-source
         cc-mode
         evil
@@ -8,7 +9,9 @@
         org
         projectile
         ;; Transitive dependencies
+        (lifted :location (recipe :fetcher github :repo "vkevroletin/lifted.el"))
         dash
+        deferred
         ede
         flycheck
         htmlize
@@ -18,6 +21,16 @@
         (auto-cpp-project    :location local)
         (compile-per-project :location local)
         (project-cache       :location local)))
+
+
+(defun user-config/init-lifted ())
+
+(defun user-config/init-deferred ())
+
+(defun user-config/init-jira ()
+  (use-package jira
+    :commands (jira-insert-my-issues-here
+               defun jira-insert-filter-result-here)))
 
 (defun user-config/post-init-cc-mode ()
   (with-eval-after-load 'cc-mode
