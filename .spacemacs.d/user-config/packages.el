@@ -30,7 +30,11 @@
 (defun user-config/init-jira ()
   (use-package jira
     :commands (jira-insert-my-issues-here
-               defun jira-insert-filter-result-here)))
+               defun jira-insert-filter-result-here))
+
+  (spacemacs/declare-prefix "aj" "jira")
+  (spacemacs/set-leader-keys "ajf" #'jira-insert-filter-result-here)
+  (spacemacs/set-leader-keys "ajm" #'jira-insert-my-issues-here))
 
 (defun user-config/post-init-cc-mode ()
   (with-eval-after-load 'cc-mode
