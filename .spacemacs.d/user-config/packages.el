@@ -33,8 +33,8 @@
                defun jira-insert-filter-result-here))
 
   (spacemacs/declare-prefix "aj" "jira")
-  (spacemacs/set-leader-keys "ajF" #'jira-insert-filter-result-here)
-  (spacemacs/set-leader-keys "ajf" #'jira-show-filter-result))
+  (spacemacs/set-leader-keys "ojF" #'jira-insert-filter-result-here)
+  (spacemacs/set-leader-keys "ojf" #'jira-show-filter-result))
 
 (defun user-config/post-init-cc-mode ()
   (with-eval-after-load 'cc-mode
