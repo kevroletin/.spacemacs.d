@@ -1,5 +1,5 @@
 (setq user-config-packages
-      '((jira :location (recipe :fetcher github :repo "vkevroletin/jira.el"))
+      '((jiraffe :location (recipe :fetcher github :repo "vkevroletin/jiraffe.el"))
         ansi-color
         auth-source
         cc-mode
@@ -27,14 +27,11 @@
 
 (defun user-config/init-deferred ())
 
-(defun user-config/init-jira ()
-  (use-package jira
-    :commands (jira-insert-my-issues-here
-               defun jira-insert-filter-result-here))
-
+(defun user-config/init-jiraffe ()
   (spacemacs/declare-prefix "aj" "jira")
-  (spacemacs/set-leader-keys "ojF" #'jira-insert-filter-result-here)
-  (spacemacs/set-leader-keys "ojf" #'jira-show-filter-result))
+  (spacemacs/set-leader-keys "ojF" #'jiraffe-insert-filter-result-here)
+  (spacemacs/set-leader-keys "ojf" #'jiraffe-show-filter-result)
+  (spacemacs/set-leader-keys "ojy" #'jiraffe-yank-issue))
 
 (defun user-config/post-init-cc-mode ()
   (with-eval-after-load 'cc-mode
