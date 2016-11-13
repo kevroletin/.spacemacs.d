@@ -18,3 +18,11 @@
          (pass (funcall (plist-get auth :secret)))
          (user (plist-get auth :user)))
     (base64-encode-string (concat user ":" pass))))
+
+(defun user-config/org-expand-all-tables ()
+  (interactive)
+
+  (save-excursion
+    (goto-char (point-min))
+    (while (re-search-forward "^[|-\+]+$" '() t)
+      (org-ctrl-c-ctrl-c))))
