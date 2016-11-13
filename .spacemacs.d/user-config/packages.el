@@ -15,17 +15,28 @@
         ede
         flycheck
         htmlize
+        request-deferred
         s
         semantic
         ;; Local code
         (auto-cpp-project    :location local)
         (compile-per-project :location local)
+        (dict-lookup         :location local)
         (project-cache       :location local)))
 
+(defun user-config/init-dict-lookup ()
+  (use-package dict-lookup
+    :commands (dict-lookup-insert-spelling-at-point
+               dict-lookup-browser-at-point))
+  (spacemacs/declare-prefix "ad" "dict")
+  (spacemacs/set-leader-keys "odi" #'dict-lookup-insert-spelling-at-point)
+  (spacemacs/set-leader-keys "odo" #'dict-lookup-browser-at-point))
 
 (defun user-config/init-lifted ())
 
 (defun user-config/init-deferred ())
+
+(defun user-config/init-request-deferred ())
 
 (defun user-config/init-jiraffe ()
   (spacemacs/declare-prefix "aj" "jira")
