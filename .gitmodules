@@ -1,4 +1,0 @@
-[submodule ".spacemacs.d/org-jira"]
-	path = .spacemacs.d/org-jira
-	url = https://github.com/jfim/org-jira.git
-	branch = master
