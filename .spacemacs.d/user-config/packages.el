@@ -1,5 +1,5 @@
 (setq user-config-packages
-      '((jiraffe :location (recipe :fetcher github :repo "vkevroletin/jiraffe.el"))
+      '((jiraffe :location (recipe :fetcher github :repo "kevroletin/jiraffe.el"))
         ansi-color
         auth-source
         cc-mode
@@ -9,7 +9,7 @@
         org
         projectile
         ;; Transitive dependencies
-        (lifted :location (recipe :fetcher github :repo "vkevroletin/lifted.el"))
+        (lifted :location (recipe :fetcher github :repo "inlinestyle/lifted.el"))
         dash
         deferred
         ede
