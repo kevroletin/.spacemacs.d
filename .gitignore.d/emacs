@@ -1,8 +1,11 @@
 *
+!/.config
+!/.config/mr
+!/.config/mr/config.d
+!/.config/mr/config.d/emacs
 !/.gitignore.d
 !/.gitignore.d/emacs
 !/.gitignore.d/emacs-config
-!/.gitmodules
 !/.spacemacs
 !/.spacemacs.d
 !/.spacemacs.d/org-jira
@@ -17,6 +20,8 @@
 !/.spacemacs.d/user-config/local/auto-cpp-project/auto-cpp-project.el
 !/.spacemacs.d/user-config/local/compile-per-project
 !/.spacemacs.d/user-config/local/compile-per-project/compile-per-project.el
+!/.spacemacs.d/user-config/local/dict-lookup
+!/.spacemacs.d/user-config/local/dict-lookup/dict-lookup.el
 !/.spacemacs.d/user-config/local/project-cache
 !/.spacemacs.d/user-config/local/project-cache/project-cache.el
 !/.spacemacs.d/user-config/packages.el
