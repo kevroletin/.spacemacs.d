@@ -1,4 +1,4 @@
-[$HOME/.config/vcsh/repo.d/emacs.git]
+[$HOME/.config/vcsh/repo.d/.spacemacs.d.git]
 checkout = vcsh clone git@github.com:kevroletin/.spacemacs.d.git emacs || vcsh clone https://github.com/kevroletin/.spacemacs.d.git emacs
 
 [$HOME/.emacs.d]
