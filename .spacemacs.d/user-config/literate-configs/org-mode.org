@@ -21,21 +21,11 @@ Agenda should be build from files listed below. Create missed files.
   (let ((personal-org-files (list "~/org/personal/gtd.org"
                                   "~/org/work/work.org")))
     (dolist (it personal-org-files) (ensure-file-exists it)))
-  (setq org-agenda-files (list "~/org/personal" "~/org/work" "~/org/work/jira"))
-
-  (ensure-file-exists "~/org/archive.org")
+  (setq org-agenda-files (list "~/org/personal" "~/org/work"))
 #+end_src
 
-Archive in file ~/org/archive.org (absolute path), under headlines
-"From FILENAME" where file name is the current file name.
-#+begin_src emacs-lisp
-  (setq org-archive-location "~/org/archive.org::* From %s")
-#+end_src
-
-Enable habit tracking in Org-mode
-#+begin_src emacs-lisp
-  (add-to-list 'org-modules 'org-habit)
-#+end_src
+The default archive location is a file in the same directory as the current
+file, with the name derived by appending _archive to the current file name.
 
 Clocking info will be wrapped into a drawer
 #+begin_src emacs-lisp
