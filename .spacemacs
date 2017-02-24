@@ -320,12 +320,25 @@ values."
    dotspacemacs-whitespace-cleanup 'changed
    ))
 
+(defun dotspacemacs//frame-title-format ()
+  "Return frame title with current project name, where applicable."
+  (let ((file buffer-file-name))
+    (if file
+        (concat (abbreviate-file-name file)
+                (when (and (bound-and-true-p projectile-mode)
+                           (projectile-project-p))
+                  (format " [%s]" (projectile-project-name))))
+      "%b")))
+
 (defun dotspacemacs/user-init ()
   "Initialization function for user code.
 It is called immediately after `dotspacemacs/init'.  You are free to put almost
 any user code here.  The exception is org related code, which should be placed
 in `dotspacemacs/user-config'."
-  (setenv "SHELL" "/bin/bash"))
+  (setenv "SHELL" "/bin/bash")
+
+  (when (display-graphic-p)
+    (setq frame-title-format '((:eval (dotspacemacs//frame-title-format))))))
 
 (defun dotspacemacs//set-path (x)
   (let ((separator (if (eq system-type 'windows-nt) ";" ":")))
