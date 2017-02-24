@@ -1,5 +1,5 @@
 [$HOME/.config/vcsh/repo.d/.spacemacs.d.git]
-checkout = vcsh clone git@github.com:kevroletin/.spacemacs.d.git emacs || vcsh clone https://github.com/kevroletin/.spacemacs.d.git emacs
+checkout = ssh -T git@github.com 2>&1 | grep -q success && vcsh clone git@github.com:kevroletin/.spacemacs.d.git emacs || vcsh clone https://github.com/kevroletin/.spacemacs.d.git emacs
 
 [$HOME/.emacs.d]
 checkout = git clone --depth 1 https://github.com/syl20bnr/spacemacs.git .emacs.d
