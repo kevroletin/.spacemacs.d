@@ -24,15 +24,18 @@
         (dict-lookup         :location local)
         (project-cache       :location local)))
 
+(defun user-config-initialize ()
+  (spacemacs/set-leader-keys "os" #'user-config/sh-send-code-block))
+
 (defun user-config/init-dict-lookup ()
   (use-package dict-lookup
     :commands (dict-lookup-insert-spelling-at-point
                dict-lookup-browser-at-point
                dict-lookup-show-spelling-at-point))
-  (spacemacs/declare-prefix "as" "dict-lookup")
-  (spacemacs/set-leader-keys "osi" #'dict-lookup-insert-spelling-at-point)
-  (spacemacs/set-leader-keys "oso" #'dict-lookup-browser-at-point)
-  (spacemacs/set-leader-keys "oss" #'dict-lookup-show-spelling-at-point))
+  (spacemacs/declare-prefix "ad" "dict-lookup")
+  (spacemacs/set-leader-keys "odi" #'dict-lookup-insert-spelling-at-point)
+  (spacemacs/set-leader-keys "odo" #'dict-lookup-browser-at-point)
+  (spacemacs/set-leader-keys "ods" #'dict-lookup-show-spelling-at-point))
 
 (defun user-config/init-lifted ())
 

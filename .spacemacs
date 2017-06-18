@@ -52,6 +52,7 @@ values."
      restclient
      search-engine
      version-control
+     (shell :variables shell-default-shell 'shell)
 
      ;; Langs
      (c-c++ :variables c-c++-default-mode-for-headers 'c++-mode)
@@ -64,6 +65,7 @@ values."
      speed-reading
      yaml
      python
+     shell-scripts
 
      ;; User config
      user-config
@@ -349,6 +351,8 @@ in `dotspacemacs/user-config'."
   "Configuration function for user code.
 This function is called at the very end of Spacemacs initialization after
 layers configuration. You are free to put any user code."
+
+  (user-config-initialize)
 
   (setq jiralib-url "https://jira.rhonda.ru:443")
   (setq org-jira-working-dir "~/org/work/jira")

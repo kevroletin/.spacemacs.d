@@ -26,3 +26,38 @@
     (goto-char (point-min))
     (while (re-search-forward "^[|-\+]+$" '() t)
       (org-ctrl-c-ctrl-c))))
+
+(defun user-config//get-code-block ()
+  (require 'org)
+
+  (if (use-region-p)
+      (concat (buffer-substring-no-properties (region-beginning)
+                                              (region-end)) "\n")
+    (if (org-in-block-p '("src" "example"))
+        (org-element-property :value (org-element-at-point))
+      (concat (buffer-substring-no-properties (point-at-bol)
+                                              (point-at-eol)) "\n"))))
+
+;; Modified version of https://stackoverflow.com/a/7053298/3168464
+(defun user-config/sh-send-code-block ()
+  "Sends 'code block' under cursor into shell buffer. If there is
+no shell buffer then it will spawn one. 'code block' is either
+selected region or org-mode code block (src or example) or
+current line"
+  (interactive ())
+  (let ((proc (get-process "shell"))
+        pbuf min max command)
+    (unless proc
+      (let ((currbuff (current-buffer)))
+        (shell)
+        (switch-to-buffer currbuff)
+        (setq proc (get-process "shell"))))
+    (setq pbuff (process-buffer proc))
+    (setq command (user-config//get-code-block))
+    (with-current-buffer pbuff
+      (goto-char (process-mark proc))
+      (insert command)
+      (move-marker (process-mark proc) (point))
+      ) ;;pop-to-buffer does not work with save-current-buffer -- bug?
+    (process-send-string  proc command)
+    (display-buffer (process-buffer proc) t)))
