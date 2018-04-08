@@ -42,7 +42,7 @@
 
   (let ((original-pos (point)))
     (dict-lookup--spelling-at-point-common
-     (lambda (word spellind)
+     (lambda (word spelling)
        (save-excursion
          (goto-char original-pos)
          (forward-symbol 1)
