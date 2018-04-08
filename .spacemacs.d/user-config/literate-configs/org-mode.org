@@ -27,17 +27,20 @@ Agenda should be build from files listed below. Create missed files.
 The default archive location is a file in the same directory as the current
 file, with the name derived by appending _archive to the current file name.
 
-Clocking info will be wrapped into a drawer
+Clocking info and status changes will be wrapped into a drawers to reduce noise.
 #+begin_src emacs-lisp
-  (setq org-clock-into-drawer t)
+(setq org-clock-into-drawer t)
+(setq org-log-into-drawer t)
 #+end_src
 
-List of TODO entry keyword sequences and their interpretation. Symbols
-in brackets define if setting status requires writing description.
+List of TODO entry keyword sequences and their interpretation. [[https://orgmode.org/manual/Tracking-TODO-state-changes.html][Symbols in
+brackets]] define if changing status requires writing description:
++ ‘!’ (for a timestamp)
++ ‘@’ (for a note with timestamp)
 #+begin_src emacs-lisp
 (setq org-todo-keywords
-      (quote ((sequence "TODO(t)" "NEW(n)"  "|" "DONE(d@/!)")
-              (sequence "WAITING(w@/!)" "MAYBE(m@/!)" "|" "CANCELLED(c@/!)"))))
+      (quote ((sequence "TODO(t)" "NEW(n)"  "|" "DONE(d)")
+              (sequence "WAITING(w@)" "MAYBE(m)" "|" "CANCELLED(c)"))))
 #+end_src
 
 Coloring have meaning. Red color disturbs me so NEW task are red -
@@ -93,7 +96,8 @@ Main idea is simple:
 + track work-related and personal activities in same way
 + but separate them in all views except for daily agenda
 
-Filters below are shortcuts for daily and weekly reviews.
+Filters below are shortcuts for daily and weekly reviews. We track reading list
+separately to reduce amount of noise.
 
 Shortcuts:
 + a :: agenda
@@ -101,6 +105,7 @@ Shortcuts:
 + t :: todos
 + h :: home (H - home tasks)
 + w :: work (W - work tasks)
++ r :: reading list
 
 See [4] for advanced filtering
 #+begin_src emacs-lisp
@@ -108,7 +113,7 @@ See [4] for advanced filtering
         '(("a" agenda)
           ("n" "NEW list"
            ((todo "NEW" ((org-agenda-overriding-header "Personal NEW task")
-                          (org-agenda-files (list "~/org/personal"))))
+                         (org-agenda-files (list "~/org/personal"))))
             (tags-todo "+REFILE-TODO=\"NEW\"" ((org-agenda-overriding-header "Personal Refile tasks (except NEW)")
                                                (org-agenda-files (list "~/org/personal"))))
             (todo "NEW" ((org-agenda-overriding-header "Work NEW task")
@@ -116,26 +121,38 @@ See [4] for advanced filtering
             (tags-todo "+REFILE-TODO=\"NEW\"" ((org-agenda-overriding-header "Work Refile tasks (except NEW)")
                                                (org-agenda-files (list "~/org/work"))))))
           ("t" "TODO list"
-           ((todo "TODO" ((org-agenda-overriding-header "Personal TODO task")
-                          (org-agenda-files (list "~/org/personal"))))
-            (todo "TODO" ((org-agenda-overriding-header "Work TODO task")
-                          (org-agenda-files (list "~/org/work"))))))
-          ("H" "Personal tasks" todo "" ((org-agenda-overriding-header "All personal task")
+           ((tags-todo "TODO=\"TODO=\"-habit-reading_list"
+                       ((org-agenda-overriding-header "Personal TODO task")
                         (org-agenda-files (list "~/org/personal"))))
-          ("W" "Work tasks" todo "" ((org-agenda-overriding-header "All work task")
-                        (org-agenda-files (list "~/org/work"))))
+            (tags-todo "TODO=\"TODO\"-habit-reading_list"
+                       ((org-agenda-overriding-header "Work TODO task")
+                        (org-agenda-files (list "~/org/work"))))))
+          ("H" "Personal tasks" tags-todo
+                                "-habit-reading_list"
+                                ((org-agenda-overriding-header "All personal task")
+                                 (org-agenda-files (list "~/org/personal"))))
+          ("W" "Work tasks" tags-todo
+                            "-habit-reading_list"
+                            ((org-agenda-overriding-header "All work task")
+                             (org-agenda-files (list "~/org/work"))))
           ("h" "Review home tasks"
            ((agenda)
-            (todo "NEW")
-            (tags-todo "-habit")
+            (todo "NEW" ((org-agenda-overriding-header "NEW")))
+            (tags-todo "+TODO=\"TODO\"-habit-reading_list" ((org-agenda-overriding-header "TODOs")))
+            (tags-todo "-TODO=\"TODO\"-TODO=\"NEW\"-habit-reading_list" ((org-agenda-overriding-header "Not yet TODOs")))
             (tags-todo "+REFILE"))
            ((org-agenda-files (list "~/org/personal"))))
           ("w" "Review work tasks"
            ((agenda)
             (todo "NEW")
-            (tags-todo "-habit")
+            (tags-todo "+TODO=\"TODO\"-habit-reading_list")
+            (tags-todo "-TODO=\"TODO\"-TODO=\"NEW\"-habit-reading_list")
             (tags-todo "+REFILE"))
-           ((org-agenda-files (list "~/org/work"))))))
+           ((org-agenda-files (list "~/org/work"))))
+          ("r" "Review reading list"
+           ((tags-todo "+TODO=\"TODO\"-habit+reading_list")
+            (tags-todo "-TODO=\"TODO\"-habit+reading_list"))
+           ((org-agenda-files (list "~/org/work" "~/org/personal"))))))
 #+end_src
 * Flyspell customization
 
