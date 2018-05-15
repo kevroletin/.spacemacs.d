@@ -352,8 +352,6 @@ in `dotspacemacs/user-config'."
 This function is called at the very end of Spacemacs initialization after
 layers configuration. You are free to put any user code."
 
-  (user-config-initialize)
-
   (setq jiralib-url "https://jira.rhonda.ru:443")
   (setq org-jira-working-dir "~/org/work/jira")
 

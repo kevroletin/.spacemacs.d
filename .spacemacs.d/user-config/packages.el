@@ -22,10 +22,16 @@
         (auto-cpp-project    :location local)
         (compile-per-project :location local)
         (dict-lookup         :location local)
+        (ghcid               :location local)
         (project-cache       :location local)))
 
-(defun user-config-initialize ()
+(defun user-config/init-user-config ()
   (spacemacs/set-leader-keys "os" #'user-config/sh-send-code-block))
+
+(defun user-config/init-ghcid ()
+  (use-package ghcid
+    :commands (ghcid
+               ghcid-stop)))
 
 (defun user-config/init-dict-lookup ()
   (use-package dict-lookup
